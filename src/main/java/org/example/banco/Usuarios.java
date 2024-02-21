@@ -1,17 +1,17 @@
 package org.example.banco;
 
 public class Usuarios {
-    private int IdUser ;
+    private String IdUser ;
     private String NombreUser;
     private  String Direccion;
-    private int NumeIdenti;
+    private String NumeIdenti;
     private  String CorreoUser;
     private  String ContraseUser;
 
     public Usuarios(){
 
     }
-    public Usuarios ( int IdUser ,String NombreUser, String Direccion,int NumeIdenti,String CorreoUser,String ContraseUser){
+    public Usuarios ( String IdUser ,String NombreUser, String Direccion,String NumeIdenti,String CorreoUser,String ContraseUser){
         this.IdUser = IdUser;
         this.NombreUser= NombreUser;
         this.NumeIdenti= NumeIdenti;
@@ -19,7 +19,7 @@ public class Usuarios {
         this.CorreoUser=CorreoUser;
         this.ContraseUser=ContraseUser;
     }
-    public int getIdUser() {
+    public String getIdUser() {
         return IdUser;
     }
 
@@ -31,7 +31,7 @@ public class Usuarios {
         return Direccion;
     }
 
-    public int getNumeIdenti() {
+    public String getNumeIdenti() {
         return NumeIdenti;
     }
 
@@ -47,7 +47,7 @@ public class Usuarios {
         NombreUser = nombreUser;
     }
 
-    public void setNumeIdenti(int numeIdenti) {
+    public void setNumeIdenti(String numeIdenti) {
         NumeIdenti = numeIdenti;
     }
 

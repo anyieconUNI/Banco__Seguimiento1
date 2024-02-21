@@ -1,18 +1,18 @@
 package org.example.banco;
 
 public class Categoria {
-    private  int IdCategoria;
+    private  String IdCategoria;
     private String NameCategoria;
 
     public Categoria(){
 
     }
-    public Categoria(int IdCategoria,String NameCategoria){
+    public Categoria(String IdCategoria,String NameCategoria){
         this.IdCategoria=IdCategoria;
         this.NameCategoria=NameCategoria;
     }
 
-    public int getIdCategoria() {
+    public String getIdCategoria() {
         return IdCategoria;
     }
 
@@ -20,7 +20,7 @@ public class Categoria {
         return NameCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(String idCategoria) {
         IdCategoria = idCategoria;
     }
 

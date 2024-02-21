@@ -2,16 +2,16 @@ package org.example.banco;
 import java.util.ArrayList;
 import java.util.List;
 public class Cuentas {
-    private int IdCuenta;
+    private String IdCuenta;
     private List<Usuarios> IdUser = new ArrayList<>();
-    private int Saldo;
+    private String Saldo;
     private  List<TipoTransferencias> RegisTransacciones = new ArrayList<>();
     private List<RegistroTransferencia> RegisTransferencias = new ArrayList<>();
 
     public Cuentas(){
 
     }
-    public Cuentas(int IdCuenta,List<Usuarios> IdUser, int Saldo ,List<TipoTransferencias> RegisTransacciones,List<RegistroTransferencia> RegisTransferencias){
+    public Cuentas(String IdCuenta,List<Usuarios> IdUser, String Saldo ,List<TipoTransferencias> RegisTransacciones,List<RegistroTransferencia> RegisTransferencias){
         this.IdCuenta=IdCuenta;
         this.IdUser=IdUser;
         this.Saldo=Saldo;
@@ -19,7 +19,7 @@ public class Cuentas {
         this.RegisTransferencias=RegisTransferencias;
     }
 
-    public int getIdCuenta() {
+    public String getIdCuenta() {
         return IdCuenta;
     }
 
@@ -27,7 +27,7 @@ public class Cuentas {
         return IdUser;
     }
 
-    public int getSaldo() {
+    public String getSaldo() {
         return Saldo;
     }
 
@@ -39,7 +39,7 @@ public class Cuentas {
         return RegisTransacciones;
     }
 
-    public void setIdCuenta(int idCuenta) {
+    public void setIdCuenta(String idCuenta) {
         IdCuenta = idCuenta;
     }
 
@@ -47,7 +47,7 @@ public class Cuentas {
         IdUser = idUser;
     }
 
-    public void setSaldo(int saldo) {
+    public void setSaldo(String saldo) {
         Saldo = saldo;
     }
 

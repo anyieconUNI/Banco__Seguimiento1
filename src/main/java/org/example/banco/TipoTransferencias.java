@@ -1,17 +1,17 @@
 package org.example.banco;
 
 public class TipoTransferencias {
-    private int IdTipoTransferencia;
+    private String IdTipoTransferencia;
     private String NameTransferencia;
     public  TipoTransferencias(){
 
     }
-    public TipoTransferencias(int IdTipoTransferencia,String NameTransferencia){
+    public TipoTransferencias(String IdTipoTransferencia,String NameTransferencia){
         this.IdTipoTransferencia= IdTipoTransferencia;
         this.NameTransferencia =NameTransferencia;
     }
 
-    public int getIdTipoTransferencia() {
+    public String getIdTipoTransferencia() {
         return IdTipoTransferencia;
     }
 
@@ -19,7 +19,7 @@ public class TipoTransferencias {
         return NameTransferencia;
     }
 
-    public void setIdTipoTransferencia(int idTipoTransferencia) {
+    public void setIdTipoTransferencia(String idTipoTransferencia) {
         IdTipoTransferencia = idTipoTransferencia;
     }
 

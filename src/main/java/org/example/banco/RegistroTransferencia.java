@@ -3,16 +3,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroTransferencia {
-    private int IdTransferencia;
-    private int UserDestino;
-    private int UserEmisor;
+    private String IdTransferencia;
+    private String UserDestino;
+    private String UserEmisor;
     private List<Categoria> Categoria = new ArrayList<>();
-    private int Cantidad;
+    private String Cantidad;
 
     public RegistroTransferencia(){
 
     }
-    public RegistroTransferencia(int IdTransferencia,int UserDestino,int UserEmisor, List<Categoria> Categoria,int Cantidad){
+    public RegistroTransferencia(String IdTransferencia,String UserDestino,String UserEmisor, List<Categoria> Categoria,String Cantidad){
         this.IdTransferencia=IdTransferencia;
         this.UserDestino= UserDestino;
         this.UserEmisor=UserEmisor;
@@ -20,15 +20,15 @@ public class RegistroTransferencia {
         this.Cantidad=Cantidad;
     }
 
-    public int getIdTransferencia() {
+    public String getIdTransferencia() {
         return IdTransferencia;
     }
 
-    public int getUserDestino() {
+    public String getUserDestino() {
         return UserDestino;
     }
 
-    public int getUserEmisor() {
+    public String getUserEmisor() {
         return UserEmisor;
     }
 
@@ -36,19 +36,19 @@ public class RegistroTransferencia {
         return Categoria;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return Cantidad;
     }
 
-    public void setIdTransferencia(int idTransferencia) {
+    public void setIdTransferencia(String idTransferencia) {
         IdTransferencia = idTransferencia;
     }
 
-    public void setUserDestino(int userDestino) {
+    public void setUserDestino(String userDestino) {
         UserDestino = userDestino;
     }
 
-    public void setUserEmisor(int userEmisor) {
+    public void setUserEmisor(String userEmisor) {
         UserEmisor = userEmisor;
     }
 
@@ -56,7 +56,7 @@ public class RegistroTransferencia {
         Categoria = categoria;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         Cantidad = cantidad;
     }
 }
