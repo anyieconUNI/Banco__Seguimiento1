@@ -2,7 +2,8 @@ package org.example.banco;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Main {
     public static void main(String[] args) {
         Banco banco = new Banco();
@@ -40,5 +41,24 @@ public class Main {
             System.out.println("correo: " + usuario.getCorreoUser());
             System.out.println("contrase: " + usuario.getContraseUser());
         }
+        banco.crearCuentaAhorros("123456789",100000);
+
+        banco.obtenerTodasCuentas();
+        List<Cuentas> cuentas = banco.obtenerTodasCuentas();
+
+        for (Cuentas cuenta : cuentas) {
+            System.out.println("CUENTASSSS: " );
+            System.out.println("Nombre: " + cuenta.getIdCuenta());
+            System.out.println("direcc: " + cuenta.getIdUser());
+            System.out.println("identi: " + cuenta.getSaldo());
+        }
+
+        LocalDate fechaActual = LocalDate.now();
+        // Formatear la fecha como una cadena
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFormateada = fechaActual.format(formato);
+        // Imprimir la fecha formateada
+        System.out.println("Fecha actual: " + fechaFormateada);
+
     }
 }
