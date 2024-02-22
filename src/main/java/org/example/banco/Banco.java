@@ -1,8 +1,8 @@
 package org.example.banco;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
-import java.util.Date;
 
 public class Banco {
 
@@ -44,18 +44,36 @@ public class Banco {
         }
         return nuemroIdvuenta.toString();
     }
-    public void crearCuentaAhorros(String IdUser,int Saldo){
+    public String crearCuentaAhorros(String IdUser, int Saldo){
         String IdCuentas = generarNumeroAleatorio();
         Cuentas nuevaCuenta=new Cuentas(IdCuentas,IdUser,Saldo);
         cuentas.add(nuevaCuenta);
+        return IdCuentas;
     }
     public List<Cuentas> obtenerTodasCuentas() {
         return cuentas;
     }
-
-    public void Transferir(List<Usuarios> UserDestino,List<Usuarios> UserEmisor, String Categoria,int Cantidad, Date fechaTransferencia){
-        String IdTransferencia = generarNumeroAleatorio();
-        RegistroTransferencia nuevaTransfe = new RegistroTransferencia(IdTransferencia,UserDestino,UserEmisor,Categoria,Cantidad,fechaTransferencia);
-        transferencias.add(nuevaTransfe);
+    public String Transferir(String userDestino, String userEmisor, String categoria, int cantidad, LocalDate fechaTransferencia) {
+        String idTransferencia = generarNumeroAleatorio();
+        for (Cuentas cuenta : cuentas) {
+            int valorTotal = cantidad + 200;
+            if(cuenta.getIdCuenta().equals(userEmisor) && cuenta.getSaldo() >= valorTotal) {
+                RegistroTransferencia nuevaTransfe = new RegistroTransferencia(idTransferencia, userDestino, userEmisor, categoria, cantidad, fechaTransferencia);
+                transferencias.add(nuevaTransfe);
+                if(cuenta.getIdCuenta().equals(userEmisor)){
+                    int nuevoSaldo =  cuenta.getSaldo() - valorTotal;
+                    cuenta.setSaldo(nuevoSaldo);
+                }
+                if (cuenta.getIdCuenta().equals(userDestino)) {
+                    int nuevoSaldo =  cuenta.getSaldo() + valorTotal;
+                    cuenta.setSaldo(nuevoSaldo);
+                }
+                return "Transferencia EXITOSA";
+            }
+        }
+        return "Transferencia fallida";
+    }
+    public List<RegistroTransferencia> obtenerTodasTransfi() {
+        return transferencias;
     }
 }
