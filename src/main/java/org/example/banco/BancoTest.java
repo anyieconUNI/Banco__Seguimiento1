@@ -12,21 +12,21 @@ public class BancoTest {
         PlataformaBancaria plataforma = new PlataformaBancaria();
         
         // Llamamos al metodo agregarUsuarios con datos de usuario simulados
-        plataforma.agregarUsuarios("123456", "Juana Peralta", "Calle 123", "1234567890", "juana@mail", "contraseña");
+        plataforma.agregarUsuarios("123456", "Juan Pérez", "Calle 123", "1234567890", "jua@example.com", "contraseña");
         
         // Verificamos si el usuario fue agregado correctamente
 
-        assertEquals(1, plataforma.getUsuarios().size()); 
+        assertEquals(1, plataforma.getUsuarios().size());
         Usuarios usuarioAgregado = plataforma.getUsuarios().get(0);
         assertEquals("123456", usuarioAgregado.getIdUser());
-        assertEquals("Juana Peralta", usuarioAgregado.getNombreUser());
-        assertEquals("Calle 123", usuarioAgregado.getDireccion()); 
-        assertEquals("1234567890", usuarioAgregado.getNumeIdenti()); 
-        assertEquals("juana@mail", usuarioAgregado.getCorreoUser()); 
-        assertEquals("contraseña", usuarioAgregado.getContraseUser()); 
+        assertEquals("Juan Pérez", usuarioAgregado.getNombreUser());
+        assertEquals("Calle 123", usuarioAgregado.getDireccion());
+        assertEquals("1234567890", usuarioAgregado.getNumeIdenti());
+        assertEquals("juan@example.com", usuarioAgregado.getCorreoUser());
+        assertEquals("contraseña", usuarioAgregado.getContraseUser());
     
     }
-    // Prueba metodo 2
+
 
     // Configuracion inicial para cada prueba
     @Before
@@ -35,6 +35,9 @@ public class BancoTest {
         // Agregamos algunos usuarios de prueba
         plataforma.agregarUsuarios("123456", "Juan Pérez", "Calle 123", "1234567890", "juan@example.com", "contraseña");
         plataforma.agregarUsuarios("789012", "María López", "Avenida 456", "0987654321", "maria@example.com", "123456");
+        // Creamos cuentas de ahorro para los usuarios de prueba
+        plataforma.crearCuentaAhorros("123456", 1000);
+        plataforma.crearCuentaAhorros("789012", 2000);
     }
     
     // Método de prueba para el método actualizarUsuario
@@ -107,4 +110,45 @@ public class BancoTest {
             }
         }
     }
+
+    //Metodo que prueba el metodo Transferencia en el caso exitosa:
+    @Test
+    
+    public void testTransferirExitoso() {
+        // Realizamos una transferencia exitosa de Juan Pérez a María López por $300
+        String resultado = plataforma.Transferir("789012", "123456", "Alimentos", 300, LocalDate.now());
+        
+        // Verificamos que la transferencia haya sido exitosa
+        assertEquals("Transferencia EXITOSA", resultado);
+        
+        // Verificamos que los saldos se hayan actualizado correctamente
+        for (Cuentas cuenta : plataforma.getCuentas()) {
+            if (cuenta.getIdCuenta().equals("123456")) {
+                assertEquals(500, cuenta.getSaldo()); // El saldo de Juan Pérez debe ser $500 después de la transferencia
+            } else if (cuenta.getIdCuenta().equals("789012")) {
+                assertEquals(2300, cuenta.getSaldo()); // El saldo de María López debe ser $2300 después de la transferencia
+            }
+        }
+    }
+
+    // prueba para el metodo transferencia en el caso fallida:
+    @Test
+
+    public void testTranserirFallido(){
+        // Intentamos realizar una transferencia fallida de Juan Pérez a María López por $1500 (saldo insuficiente)
+        String resultado = plataforma.Transferir("789012", "123456", "Alimentos", 1500, LocalDate.now());
+        
+        // Verificamos que la transferencia haya fallado
+        assertEquals("Transferencia fallida", resultado);
+        
+        // Verificamos que los saldos no hayan cambiado
+        for (Cuentas cuenta : plataforma.getCuentas()) {
+            if (cuenta.getIdCuenta().equals("123456")) {
+                assertEquals(1000, cuenta.getSaldo()); // El saldo de Juan Pérez debe seguir siendo $1000
+            } else if (cuenta.getIdCuenta().equals("789012")) {
+                assertEquals(2000, cuenta.getSaldo()); // El saldo de María López debe seguir siendo $2000
+            }
+        }
+    }
+
 }
