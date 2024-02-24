@@ -73,6 +73,7 @@ public class Banco {
                 if (cuenta.getIdCuenta().equals(userEmisor)) {
                     int nuevoSaldo = cuenta.getSaldo() - valorTotal;
                     cuenta.setSaldo(nuevoSaldo);
+                    cuenta.setTipoTrans("Salida");
                     return "su saldo "+cuenta.getSaldo()+cuenta.getTipoTrans();
                 }
             }
@@ -85,6 +86,7 @@ public class Banco {
                 if (cuenta.getIdCuenta().equals(userDestino)) {
                     int nuevoSaldo = cuenta.getSaldo() + valorTotal -200;
                     cuenta.setSaldo(nuevoSaldo);
+                    cuenta.setTipoTrans("Entrada");
                     return "su saldo receptor "+cuenta.getSaldo()+cuenta.getTipoTrans();
                 }
             }
@@ -97,7 +99,7 @@ public class Banco {
                 for (Cuentas cuenta : cuentas) {
                     if (cuenta.getIdUser().equals(NumeroIdenti)) {
                         String saldo = "Su saldo es: " + cuenta.getSaldo();
-                        String transacciones = obtenerTransaccionesAsociadas(cuenta.getIdCuenta());
+                        String transacciones = obtenerTransaccionesAsociadas(cuenta.getIdCuenta(),cuenta.getTipoTrans(),NumeroIdenti );
                         return saldo + "\n" + transacciones;
                     }
                 }
@@ -106,13 +108,12 @@ public class Banco {
         return "No se ha encontrado usuario o contraseña";
     }
 
-    public String obtenerTransaccionesAsociadas(String idCuenta) {
+    public String obtenerTransaccionesAsociadas(String idCuenta,String tipo,String NumeroIdenti) {
         StringBuilder movimientos = new StringBuilder("Sus movimientos:\n");
         for (RegistroTransferencia transferencia : transferencias) {
-
             if (transferencia.getUserDestino().equals(idCuenta) || transferencia.getUserEmisor().equals(idCuenta)) {
                 movimientos.append("Categoría:"+transferencia.getCategoria() + " Cantidad:" + transferencia.getCantidad()
-                        +" Fecha:" +transferencia.getFechaTransferencia() +" Tipo de transferencia:"+ transferencia.getTipoTrans()).append("\n");
+                        +" Fecha:" +transferencia.getFechaTransferencia() +" Tipo de transferencia:"+ tipo +NumeroIdenti).append("\n");
 
             }
         }
