@@ -35,7 +35,6 @@ public class Banco {
     public List<Usuarios> obtenerTodosUsuarios() {
         return usuarios;
     }
-
     public String generarNumeroAleatorio(){
         Random random = new Random();
         StringBuilder nuemroIdvuenta = new StringBuilder();
@@ -99,7 +98,7 @@ public class Banco {
                 for (Cuentas cuenta : cuentas) {
                     if (cuenta.getIdUser().equals(NumeroIdenti)) {
                         String saldo = "Su saldo es: " + cuenta.getSaldo();
-                        String transacciones = obtenerTransaccionesAsociadas(cuenta.getIdCuenta(),cuenta.getTipoTrans(),NumeroIdenti );
+                        String transacciones = obtenerTransaccionesAsociadas(cuenta.getIdCuenta(),cuenta.getTipoTrans());
                         return saldo + "\n" + transacciones;
                     }
                 }
@@ -107,44 +106,67 @@ public class Banco {
         }
         return "No se ha encontrado usuario o contraseña";
     }
-
-    public String obtenerTransaccionesAsociadas(String idCuenta,String tipo,String NumeroIdenti) {
+    public String obtenerTransaccionesAsociadas(String idCuenta,String tipo) {
         StringBuilder movimientos = new StringBuilder("Sus movimientos:\n");
         for (RegistroTransferencia transferencia : transferencias) {
             if (transferencia.getUserDestino().equals(idCuenta) || transferencia.getUserEmisor().equals(idCuenta)) {
                 movimientos.append("Categoría:"+transferencia.getCategoria() + " Cantidad:" + transferencia.getCantidad()
-                        +" Fecha:" +transferencia.getFechaTransferencia() +" Tipo de transferencia:"+ tipo +NumeroIdenti).append("\n");
+                        +" Fecha:" +transferencia.getFechaTransferencia() +" Tipo de transferencia:"+ tipo ).append("\n");
 
             }
         }
         return movimientos.toString();
     }
-
     public List<RegistroTransferencia> obtenerTodasTransfi() {
         return transferencias;
     }
-
     public List<Usuarios> getUsuarios() {
         return usuarios;
     }
-
     public void setUsuarios(List<Usuarios> usuarios) {
         this.usuarios = usuarios;
     }
-
     public List<Cuentas> getCuentas() {
         return cuentas;
     }
-
     public void setCuentas(List<Cuentas> cuentas) {
         this.cuentas = cuentas;
     }
-
     public List<RegistroTransferencia> getTransferencias() {
         return transferencias;
     }
-
     public void setTransferencias(List<RegistroTransferencia> transferencias) {
         this.transferencias = transferencias;
+    }
+    public String ObtenerTransfeRango(String idCuenta, LocalDate fechaInicio, LocalDate fechaFin){
+        StringBuilder movimientos = new StringBuilder("Sus movimientos:\n");
+        for (RegistroTransferencia transferencia : transferencias) {
+            for (Cuentas cuenta : cuentas) {
+                if (cuenta.getIdUser().equals(idCuenta)) {
+                    if (transferencia.getUserDestino().equals(cuenta.getIdCuenta()) || transferencia.getUserEmisor().equals(cuenta.getIdCuenta())) {
+                        if((transferencia.getFechaTransferencia().isAfter(fechaInicio) || transferencia.getFechaTransferencia().isEqual(fechaInicio)) && (transferencia.getFechaTransferencia().isBefore(fechaFin) || transferencia.getFechaTransferencia().isEqual(fechaFin))){
+                            movimientos.append("Categoría:"+transferencia.getCategoria() + " Cantidad:" + transferencia.getCantidad() +" Fecha:" +transferencia.getFechaTransferencia()).append("\n");
+                        }
+                    }
+                }
+            }
+        }
+        return movimientos.toString();
+    }
+    public String ObtenerTodasTransFecha(LocalDate fechaInicio, LocalDate fechaFin){
+        StringBuilder movimientos = new StringBuilder("Todas las transferencias desde: "+fechaInicio+ " hasta: "+fechaFin+"\n");
+        for (RegistroTransferencia transferencia : transferencias) {
+                if((transferencia.getFechaTransferencia().isAfter(fechaInicio) || transferencia.getFechaTransferencia().isEqual(fechaInicio)) && (transferencia.getFechaTransferencia().isBefore(fechaFin) || transferencia.getFechaTransferencia().isEqual(fechaFin))){
+                    movimientos.append("Categoría:"+transferencia.getCategoria() + " Cantidad:" + transferencia.getCantidad() +" Fecha:" +transferencia.getFechaTransferencia()).append("\n");
+                }
+        }
+        return movimientos.toString();
+    }
+    public String ObtenerTodasCuentas(){
+        StringBuilder movimientos = new StringBuilder("Todas las cuentas \n ");
+        for(Cuentas cuentas : cuentas){
+            movimientos.append("IdCuenta:"+cuentas.getIdCuenta() + " Usuario:" + cuentas.getIdUser() ).append("\n");
+        }
+        return movimientos.toString();
     }
 }

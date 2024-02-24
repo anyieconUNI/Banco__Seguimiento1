@@ -14,6 +14,7 @@ public class Main {
         // Crear usuarios de ejemplo
         banco.agregarUsuarios("111111","Juan Perez", "Calle 123", "123456789", "juan@example.com", "contrasena");
         banco.agregarUsuarios("12344","Maria Lopez", "Avenida 456", "987654321", "maria@example.com", "password");
+        banco.agregarUsuarios("123444","Maria Lopez", "Avenida 456", "9876543214", "maria@example.com", "password");
 
         banco.obtenerTodosUsuarios();
         List<Usuarios> todosUsuarios = banco.obtenerTodosUsuarios();
@@ -45,6 +46,7 @@ public class Main {
         }*/
         String cuentaahorro =banco.crearCuentaAhorros("123456789",20000);
         String cuentaahorroem =banco.crearCuentaAhorros("987654321",20000);
+        String cuentaahorrodoss =banco.crearCuentaAhorros("9876543214",20000);
 
         banco.obtenerTodasCuentas();
         List<Cuentas> cuentas = banco.obtenerTodasCuentas();
@@ -63,7 +65,8 @@ public class Main {
 
 
         String resultadoTransferencia = banco.Transferir(cuentaahorro,cuentaahorroem,"fiesta",1000,fechaTransferencia);
-        System.out.println(resultadoTransferencia);
+        String resultadoTransferenciaw = banco.Transferir(cuentaahorro,cuentaahorroem,"fiesta",1000,fechaTransferencia);
+        System.out.println(resultadoTransferencia+resultadoTransferenciaw);
         banco.obtenerTodasTransfi();
         List<RegistroTransferencia> transferencias = banco.obtenerTodasTransfi();
         for(RegistroTransferencia transfi : transferencias){
@@ -73,17 +76,23 @@ public class Main {
             System.out.println("idtransfi: " + transfi.getIdTransferencia());
         }
 
-
-        /*String resultadoTransferencias = banco.Transferir(cuentaahorroem,cuentaahorro,"fiesta444",10000,fechaTransferencia);
-        System.out.println(resultadoTransferencias);*/
-       String resultados = banco.BuscarIdenSaldo("987654321","password");
+        LocalDate fechaFinss= LocalDate.of(2024, 2, 29);
+        String resultadoTransferencias = banco.Transferir(cuentaahorrodoss,cuentaahorroem,"SEGUNDO",10000,fechaFinss);
+        System.out.println(resultadoTransferencias);
+       String resultados = banco.BuscarIdenSaldo("9876543214","password");
         System.out.println(resultados);
 
         String resultadosemi = banco.BuscarIdenSaldo("123456789","contrasena");
         System.out.println(resultadosemi);
 
-        /*String obtenerTransaccionesAsociadas = banco.obtenerTransaccionesAsociadas("8291718333");
-        System.out.println(obtenerTransaccionesAsociadas);*/
+        LocalDate fechaInicio = LocalDate.of(2024, 2, 20);  // Reemplaza con tu fecha de inicio
+        LocalDate fechaFin = LocalDate.of(2024, 3, 29);
+        String ObtenerTransfeRango = banco.ObtenerTransfeRango("9876543214",fechaInicio,fechaFin);
+        System.out.println(ObtenerTransfeRango);
 
+        String hola = banco.ObtenerTodasTransFecha(fechaInicio,fechaFin);
+        System.out.println(hola);
+        String u = banco.ObtenerTodasCuentas();
+        System.out.println(u);
     }
 }
