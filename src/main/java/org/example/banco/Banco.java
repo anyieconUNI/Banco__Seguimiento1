@@ -60,20 +60,90 @@ public class Banco {
             if(cuenta.getIdCuenta().equals(userEmisor) && cuenta.getSaldo() >= valorTotal) {
                 RegistroTransferencia nuevaTransfe = new RegistroTransferencia(idTransferencia, userDestino, userEmisor, categoria, cantidad, fechaTransferencia);
                 transferencias.add(nuevaTransfe);
-                if(cuenta.getIdCuenta().equals(userEmisor)){
-                    int nuevoSaldo =  cuenta.getSaldo() - valorTotal;
-                    cuenta.setSaldo(nuevoSaldo);
-                }
-                if (cuenta.getIdCuenta().equals(userDestino)) {
-                    int nuevoSaldo =  cuenta.getSaldo() + valorTotal;
-                    cuenta.setSaldo(nuevoSaldo);
-                }
-                return "Transferencia EXITOSA";
+                String unos= actualizarSaldoEmisor(valorTotal,userEmisor);
+                String uno = actualizarReceptor(valorTotal,userDestino);
+                return "Transferencia EXITOSA"+uno +" decontar"+unos;
             }
         }
         return "Transferencia fallida";
     }
+    public String actualizarSaldoEmisor(int valorTotal,String userEmisor){
+        for (Cuentas cuenta : cuentas) {
+            if (cuenta.getIdCuenta().equals(userEmisor) && cuenta.getSaldo() >= valorTotal) {
+                if (cuenta.getIdCuenta().equals(userEmisor)) {
+                    int nuevoSaldo = cuenta.getSaldo() - valorTotal;
+                    cuenta.setSaldo(nuevoSaldo);
+                    return "su saldo "+cuenta.getSaldo()+cuenta.getTipoTrans();
+                }
+            }
+        }
+        return "no encontrado";
+    }
+    public String actualizarReceptor(int valorTotal,String userDestino){
+        for (Cuentas cuenta : cuentas) {
+            if (cuenta.getIdCuenta().equals(userDestino) && cuenta.getSaldo() >= valorTotal) {
+                if (cuenta.getIdCuenta().equals(userDestino)) {
+                    int nuevoSaldo = cuenta.getSaldo() + valorTotal -200;
+                    cuenta.setSaldo(nuevoSaldo);
+                    return "su saldo receptor "+cuenta.getSaldo()+cuenta.getTipoTrans();
+                }
+            }
+        }
+        return "no encontrado";
+    }
+    public String BuscarIdenSaldo(String NumeroIdenti, String Contraseña) {
+        for (Usuarios usuario : usuarios) {
+            if (usuario.getNumeIdenti().equals(NumeroIdenti) && usuario.getContraseUser().equals(Contraseña)) {
+                for (Cuentas cuenta : cuentas) {
+                    if (cuenta.getIdUser().equals(NumeroIdenti)) {
+                        String saldo = "Su saldo es: " + cuenta.getSaldo();
+                        String transacciones = obtenerTransaccionesAsociadas(cuenta.getIdCuenta());
+                        return saldo + "\n" + transacciones;
+                    }
+                }
+            }
+        }
+        return "No se ha encontrado usuario o contraseña";
+    }
+
+    public String obtenerTransaccionesAsociadas(String idCuenta) {
+        StringBuilder movimientos = new StringBuilder("Sus movimientos:\n");
+        for (RegistroTransferencia transferencia : transferencias) {
+
+            if (transferencia.getUserDestino().equals(idCuenta) || transferencia.getUserEmisor().equals(idCuenta)) {
+                movimientos.append("Categoría:"+transferencia.getCategoria() + " Cantidad:" + transferencia.getCantidad()
+                        +" Fecha:" +transferencia.getFechaTransferencia() +" Tipo de transferencia:"+ transferencia.getTipoTrans()).append("\n");
+
+            }
+        }
+        return movimientos.toString();
+    }
+
     public List<RegistroTransferencia> obtenerTodasTransfi() {
         return transferencias;
+    }
+
+    public List<Usuarios> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuarios> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public List<Cuentas> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuentas> cuentas) {
+        this.cuentas = cuentas;
+    }
+
+    public List<RegistroTransferencia> getTransferencias() {
+        return transferencias;
+    }
+
+    public void setTransferencias(List<RegistroTransferencia> transferencias) {
+        this.transferencias = transferencias;
     }
 }

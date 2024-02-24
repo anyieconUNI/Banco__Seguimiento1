@@ -7,6 +7,8 @@ public class Cuentas {
     //private List<Usuarios> IdUser = new ArrayList<>();
     private int Saldo;
 
+    private String TipoTrans;
+
     public Cuentas(){
 
     }
@@ -28,6 +30,10 @@ public class Cuentas {
         return Saldo;
     }
 
+    public String getTipoTrans() {
+        return TipoTrans;
+    }
+
     public void setIdCuenta(String idCuenta) {
         IdCuenta = idCuenta;
     }
@@ -38,4 +44,7 @@ public class Cuentas {
         Saldo = saldo;
     }
 
+    public void setTipoTrans(String tipoTrans) {
+        TipoTrans = tipoTrans;
+    }
 }

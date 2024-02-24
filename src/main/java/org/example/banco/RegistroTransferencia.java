@@ -11,6 +11,7 @@ public class RegistroTransferencia {
     private String Categoria ;
     private int Cantidad;
     private LocalDate  fechaTransferencia;
+    private  TipoTrans tipoTrans;
 
     public RegistroTransferencia(){
 
@@ -48,6 +49,10 @@ public class RegistroTransferencia {
         return fechaTransferencia;
     }
 
+    public TipoTrans getTipoTrans() {
+        return tipoTrans;
+    }
+
     public void setIdTransferencia(String idTransferencia) {
         IdTransferencia = idTransferencia;
     }
@@ -70,5 +75,9 @@ public class RegistroTransferencia {
 
     public void setFechaTransferencia(LocalDate  fechaTransferencia) {
         this.fechaTransferencia = fechaTransferencia;
+    }
+
+    public void setTipoTrans(TipoTrans tipoTrans) {
+        this.tipoTrans = tipoTrans;
     }
 }
