@@ -6,7 +6,7 @@ import org.example.banco.Usuarios;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-
+import java.util.Map;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
@@ -197,5 +197,30 @@ public class BancoTest {
         Banco banco = new Banco();
         String resultado = banco.ObtenerTodasCuentas();
         Assert.assertEquals("Todas las cuentas \n ", resultado);
+    }
+    // Prueba para método  Obtener un porcentaje de gastos y de ingresos dado el mes. A la vez debe discriminar los gastos según la categoría.
+    @Before
+    public void setUp() {
+        // Configurar el banco y agregar algunas transacciones de prueba
+        banco = new Banco();
+        banco.getTransferencias().add(new RegistroTransferencia("1", "usuario1", "usuario2", "Comida", 100, LocalDate.of(2024, 1, 15)));
+        banco.getTransferencias().add(new RegistroTransferencia("2", "usuario2", "usuario1", "Transporte", 50, LocalDate.of(2024, 1, 20)));
+        banco.getTransferencias().add(new RegistroTransferencia("3", "usuario1", "usuario2", "Comida", 80, LocalDate.of(2024, 2, 10)));
+        banco.getTransferencias().add(new RegistroTransferencia("4", "usuario2", "usuario1", "Alquiler", 200, LocalDate.of(2024, 2, 15)));
+    }
+    
+    @Test
+    public void testObtenerPorcentajeGastosIngresos() {
+        // Calcular el porcentaje de gastos e ingresos para el mes de enero (mes 1)
+        Map<String, Double> porcentajeGastosIngresos = banco.obtenerPorcentajeGastosIngresos("1");
+        
+        // Verificar el porcentaje de gastos para la categoría "Comida" (se espera 66.67%)
+        assertEquals(66.67, porcentajeGastosIngresos.get("Comida"), 0.01);
+        
+        // Verificar el porcentaje de gastos para la categoría "Transporte" (se espera 33.33%)
+        assertEquals(33.33, porcentajeGastosIngresos.get("Transporte"), 0.01);
+        
+        // Verificar el porcentaje de ingresos (se espera 0% porque no hay ingresos en enero)
+        assertEquals(0, porcentajeGastosIngresos.get("Ingresos"), 0.01);
     }
 }
