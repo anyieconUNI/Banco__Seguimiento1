@@ -3,9 +3,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Banco {
-
+    private List<Cuentas> cuentas;
+    private List<RegistroTransferencia> transferencias;
     private  List<Usuarios> usuarios = new ArrayList<>();
     private  List<Cuentas> cuentas = new ArrayList<>();
     private List<RegistroTransferencia> transferencias = new ArrayList<>();
