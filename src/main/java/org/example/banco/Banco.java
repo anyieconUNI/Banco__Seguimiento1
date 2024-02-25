@@ -170,4 +170,35 @@ public class Banco {
         }
         return movimientos.toString();
     }
+    // Obtener un porcentaje de gastos y de ingresos dado el mes. A la vez debe discriminar los gastos según la categoría.
+    public Map<String, Double> obtenerPorcentajeGastosIngresos(String mes) {
+        Map<String, Double> porcentajeGastosIngresos = new HashMap<>();
+        Map<String, Double> totalGastos = new HashMap<>();
+        double totalIngresos = 0;
+        double totalGasto = 0;
+
+        // Calcular total de ingresos y gastos por categoría
+        for (RegistroTransferencia transferencia : transferencias) {
+            if (transferencia.getFechaTransferencia().getMonthValue() == Integer.parseInt(mes)) {
+                if (transferencia.getTipo().equals("Salida")) {
+                    totalGasto += transferencia.getCantidad();
+                    totalGastos.put(transferencia.getCategoria(), totalGastos.getOrDefault(transferencia.getCategoria(), 0.0) + transferencia.getCantidad());
+                } else {
+                    totalIngresos += transferencia.getCantidad();
+                }
+            }
+        }
+        
+        // Calcular porcentaje de gastos e ingresos
+        for (Map.Entry<String, Double> entry : totalGastos.entrySet()) {
+            double porcentajeGasto = (entry.getValue() / totalGasto) * 100;
+            porcentajeGastosIngresos.put(entry.getKey(), porcentajeGasto);
+        }
+
+
+        double porcentajeIngreso = (totalIngresos / (totalIngresos + totalGasto)) * 100;
+        porcentajeGastosIngresos.put("Ingresos", porcentajeIngreso);
+        
+        return porcentajeGastosIngresos;
+    }
 }
