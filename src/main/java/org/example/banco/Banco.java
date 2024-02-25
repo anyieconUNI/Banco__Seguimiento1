@@ -11,8 +11,8 @@ public class Banco {
     private List<Cuentas> cuentas;
     private List<RegistroTransferencia> transferencias;
     private  List<Usuarios> usuarios = new ArrayList<>();
-    private  List<Cuentas> cuentas = new ArrayList<>();
-    private List<RegistroTransferencia> transferencias = new ArrayList<>();
+    //private  List<Cuentas> cuentas = new ArrayList<>();
+    //private List<RegistroTransferencia> transferencias = new ArrayList<>();
     public Banco() {
         this.usuarios = new ArrayList<>();
         this.cuentas=new ArrayList<>();
@@ -184,10 +184,14 @@ public class Banco {
         // Calcular total de ingresos y gastos por categoría
         for (RegistroTransferencia transferencia : transferencias) {
             if (transferencia.getFechaTransferencia().getMonthValue() == Integer.parseInt(mes)) {
-                if (transferencia.getTipo().equals("Salida")) {
+                Boolean prueba = false;
+                for(Cuentas cuenta : cuentas){
+                    prueba = cuenta.getTipoTrans().equals("Salida");
+                }
+                if (prueba = true) {
                     totalGasto += transferencia.getCantidad();
                     totalGastos.put(transferencia.getCategoria(), totalGastos.getOrDefault(transferencia.getCategoria(), 0.0) + transferencia.getCantidad());
-                } else {
+                }else {
                     totalIngresos += transferencia.getCantidad();
                 }
             }

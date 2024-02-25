@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) {
         Banco banco = new Banco();
@@ -94,5 +96,13 @@ public class Main {
         System.out.println(hola);
         String u = banco.ObtenerTodasCuentas();
         System.out.println(u);
+
+        banco.getTransferencias().add(new RegistroTransferencia("1", "usuario1", "usuario2", "Comida", 100, LocalDate.of(2024, 1, 15)));
+        banco.getTransferencias().add(new RegistroTransferencia("2", "usuario2", "usuario1", "Transporte", 50, LocalDate.of(2024, 1, 20)));
+        banco.getTransferencias().add(new RegistroTransferencia("3", "usuario1", "usuario2", "Comida", 80, LocalDate.of(2024, 2, 10)));
+        banco.getTransferencias().add(new RegistroTransferencia("4", "usuario2", "usuario1", "Alquiler", 200, LocalDate.of(2024, 2, 15)));
+        // Calcular el porcentaje de gastos e ingresos para el mes de enero (mes 1)
+        Map<String, Double> porcentajeGastosIngresos = banco.obtenerPorcentajeGastosIngresos("1");
+        System.out.println(porcentajeGastosIngresos);
     }
 }
